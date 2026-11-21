@@ -1,0 +1,26 @@
+<!-- Member 3: Update Focus Session -->
+<section id="update-session-section">
+    <h2>Update Focus Session</h2>
+    <form id="update-session-form" novalidate>
+        <label for="update-session-id">Session ID</label>
+        <input type="text" id="update-session-id" placeholder="e.g. 1" required>
+
+        <label for="update-subject">Subject</label>
+        <input type="text" id="update-subject" placeholder="e.g. Math revision" required>
+
+        <label for="update-date">Date</label>
+        <input type="date" id="update-date" required>
+
+        <label for="update-start-time">Start time</label>
+        <input type="time" id="update-start-time" required>
+
+        <label for="update-end-time">End time</label>
+        <input type="time" id="update-end-time" required>
+
+        <label for="update-notes">Notes (optional)</label>
+        <textarea id="update-notes" rows="3" placeholder="e.g. Chapter 4 practice questions"></textarea>
+
+        <button type="submit">Update Session</button>
+    </form>
+    <p id="update-message" class="message" role="alert"></p>
+</section>

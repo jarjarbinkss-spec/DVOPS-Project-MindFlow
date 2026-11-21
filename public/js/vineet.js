@@ -21,9 +21,7 @@ function validateInput({ id, subject, date, startTime, endTime }) {
   }
   const start = toMinutes(startTime);
   const end = toMinutes(endTime);
-  if (start === null || end === null) {
-    return 'Times must be in HH:MM (24-hour) format.';
-  }
+  if (start === null || end === null) return 'Times must be in HH:MM (24-hour) format.';
   if (end <= start) return 'End time must be later than start time.';
   return null;
 }
@@ -31,13 +29,13 @@ function validateInput({ id, subject, date, startTime, endTime }) {
 async function updateSession(event) {
   event.preventDefault();
 
-  const id = document.getElementById('session-id').value.trim();
+  const id = document.getElementById('update-session-id').value.trim();
   const payload = {
-    subject: document.getElementById('subject').value,
-    date: document.getElementById('date').value,
-    startTime: document.getElementById('start-time').value,
-    endTime: document.getElementById('end-time').value,
-    notes: document.getElementById('notes').value
+    subject: document.getElementById('update-subject').value,
+    date: document.getElementById('update-date').value,
+    startTime: document.getElementById('update-start-time').value,
+    endTime: document.getElementById('update-end-time').value,
+    notes: document.getElementById('update-notes').value
   };
 
   // Frontend validation: quick feedback before hitting the server
