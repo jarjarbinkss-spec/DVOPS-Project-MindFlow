@@ -16,6 +16,32 @@
         <!-- Each team member adds their own feature section below -->
 
         <!-- Member 1 (Jared Aw): Log Focus Session -->
+        <section class="card" id="logSessionSection">
+            <h2>Log Focus Session</h2>
+            <form id="logSessionForm" novalidate>
+                <div class="form-group">
+                    <label for="sessionSubject">Subject</label>
+                    <input type="text" id="sessionSubject" maxlength="50" placeholder="e.g. DevOps Essentials">
+                </div>
+                <div class="form-group">
+                    <label for="sessionDate">Date</label>
+                    <input type="date" id="sessionDate">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="sessionStart">Start time</label>
+                        <input type="time" id="sessionStart">
+                    </div>
+                    <div class="form-group">
+                        <label for="sessionEnd">End time</label>
+                        <input type="time" id="sessionEnd">
+                    </div>
+                </div>
+                <p id="durationPreview" class="duration">Duration: -</p>
+                <button type="submit" class="btn-primary">Log Session</button>
+            </form>
+            <div id="sessionMessage" class="message" role="alert"></div>
+        </section>
 
         <!-- Member 2: Create Workload Task -->
 
@@ -23,5 +49,6 @@
     </main>
 
     <!-- Each team member adds their own script tag below -->
+    <script src="js/jared-aw.js"></script>
 </body>
 </html>
