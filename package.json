@@ -1,0 +1,14 @@
+{
+  "name": "mindflow",
+  "version": "1.0.0",
+  "description": "MindFlow - Academic Workload & Focus Tracker (DVOPS Project Part 1)",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.2"
+  }
+}
