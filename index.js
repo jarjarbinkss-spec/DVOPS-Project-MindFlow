@@ -12,10 +12,9 @@ app.use(express.static('./public'));
 // Routes (each team member registers their own route(s) below)
 // ---------------------------------------------------------------
 
-// Read and Delete tasks (Ahmad)
-const { viewTasks, deleteTask } = require('./utils/JohnTanUtil');
+// Read tasks (Ahmad)
+const { viewTasks } = require('./utils/AhmadUtil.js');
 app.get('/view-tasks', viewTasks);
-app.delete('/delete-task/:id', deleteTask);
 
 var server = app.listen(PORT, function () {
     const address = server.address();
