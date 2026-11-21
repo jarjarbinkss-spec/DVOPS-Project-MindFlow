@@ -1,26 +1,53 @@
-<!-- Member 3: Update Focus Session -->
-<section id="update-session-section">
-    <h2>Update Focus Session</h2>
-    <form id="update-session-form" novalidate>
-        <label for="update-session-id">Session ID</label>
-        <input type="text" id="update-session-id" placeholder="e.g. 1" required>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindFlow - Academic Workload &amp; Focus Tracker</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <h1>MindFlow</h1>
+        <p>Academic Workload &amp; Focus Tracker</p>
+    </header>
 
-        <label for="update-subject">Subject</label>
-        <input type="text" id="update-subject" placeholder="e.g. Math revision" required>
+    <main class="container">
+        <!-- Each team member adds their own feature section below -->
 
-        <label for="update-date">Date</label>
-        <input type="date" id="update-date" required>
+        <!-- Member 1 (Jared Aw): Log Focus Session -->
 
-        <label for="update-start-time">Start time</label>
-        <input type="time" id="update-start-time" required>
+        <!-- Member 2: Create Workload Task -->
 
-        <label for="update-end-time">End time</label>
-        <input type="time" id="update-end-time" required>
+        <!-- Member 3 (Vineet): Update Focus Session -->
+        <section id="update-session-section">
+            <h2>Update Focus Session</h2>
+            <form id="update-session-form" novalidate>
+                <label for="update-session-id">Session ID</label>
+                <input type="text" id="update-session-id" placeholder="e.g. 101" required>
 
-        <label for="update-notes">Notes (optional)</label>
-        <textarea id="update-notes" rows="3" placeholder="e.g. Chapter 4 practice questions"></textarea>
+                <label for="update-subject">Subject</label>
+                <input type="text" id="update-subject" placeholder="e.g. Math revision" required>
 
-        <button type="submit">Update Session</button>
-    </form>
-    <p id="update-message" class="message" role="alert"></p>
-</section>
+                <label for="update-date">Date</label>
+                <input type="date" id="update-date" required>
+
+                <label for="update-start-time">Start time</label>
+                <input type="time" id="update-start-time" required>
+
+                <label for="update-end-time">End time</label>
+                <input type="time" id="update-end-time" required>
+
+                <label for="update-notes">Notes (optional)</label>
+                <textarea id="update-notes" rows="3" placeholder="e.g. Chapter 4 practice questions"></textarea>
+
+                <button type="submit">Update Session</button>
+            </form>
+            <p id="update-message" class="message" role="alert"></p>
+        </section>
+    </main>
+
+    <!-- Each team member adds their own script tag below -->
+    <script src="js/vineet.js"></script>
+</body>
+</html>
