@@ -1,0 +1,22 @@
+{
+  "focus_sessions": [
+    {
+      "id": "101",
+      "userId": "u1",
+      "subject": "Network Security",
+      "date": "2026-11-25",
+      "startTime": "10:00",
+      "endTime": "11:30",
+      "notes": "Chapter 3 review"
+    },
+    {
+      "id": "102",
+      "userId": "u1",
+      "subject": "Cloud App Dev",
+      "date": "2026-11-25",
+      "startTime": "14:00",
+      "endTime": "15:30",
+      "notes": "AWS Lambda lab"
+    }
+  ]
+}
