@@ -8,6 +8,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 
+// ---------------------------------------------------------------
+// Routes (each team member registers their own route(s) below)
+// ---------------------------------------------------------------
+
+// View Focus Sessions
+const { viewSessions } = require('./utils/AhmadUtil.js');
+app.get('/view-sessions', viewSessions);
+
 // Log Focus Session
 const { logSession } = require('./utils/JaredAwUtil');
 app.post('/log-session', logSession);
