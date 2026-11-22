@@ -16,6 +16,10 @@ app.use(express.static('./public'));
 const { viewTasks } = require('./utils/AhmadUtil.js');
 app.get('/view-tasks', viewTasks);
 
+// Read: View / Filter Workload Tasks (Ahmad)
+const { viewTasks } = require('./utils/AhmadUtil');
+app.get('/view-tasks', viewTasks);
+
 var server = app.listen(PORT, function () {
     const address = server.address();
     const baseUrl = `http://${address.address == '::' ? 'localhost' : address.address}:${address.port}`;

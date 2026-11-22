@@ -1,90 +1,145 @@
-// MindFlow backend for: (Read) view / filter workload tasks
+// READ feature: view and filter logged focus sessions
 const fs = require('fs').promises;
 const path = require('path');
 
-const TASKS_FILE = path.join(__dirname, 'tasks.json');
+// __dirname makes the path work no matter which folder the server is started from
+const SESSIONS_FILE = path.join(__dirname, 'sessions.json');
 
-// Must match the values used by the Create Task and Update Status features
-const VALID_EFFORTS = ['Low', 'Medium', 'High'];
-const VALID_STATUSES = ['Pending', 'In Progress', 'Completed'];
-const VALID_SORT_FIELDS = ['deadline', 'effort', 'name', 'status'];
+const DATE_REGEX = /^\d{4}-\d{2}-\d{2}$/;
+const MAX_SUBJECT_LENGTH = 50;
+const VALID_SORT_FIELDS = ['date', 'startTime', 'subject', 'durationMinutes'];
 const VALID_ORDERS = ['asc', 'desc'];
-const EFFORT_RANK = { Low: 1, Medium: 2, High: 3 };
 
-async function readJSON(file) {
-  return JSON.parse(await fs.readFile(file, 'utf8'));
+// Check that a "YYYY-MM-DD" string is a real calendar date (rejects 2026-02-31)
+function isValidDate(dateString) {
+    if (!DATE_REGEX.test(dateString)) return false;
+    const [year, month, day] = dateString.split('-').map(Number);
+    const date = new Date(Date.UTC(year, month - 1, day));
+    return (
+        date.getUTCFullYear() === year &&
+        date.getUTCMonth() === month - 1 &&
+        date.getUTCDate() === day
+    );
 }
 
-async function writeJSON(file, data) {
-  await fs.writeFile(file, JSON.stringify(data, null, 2), 'utf8');
+// Read all sessions. A missing file means no sessions have been logged yet.
+async function readSessions() {
+    try {
+        const data = await fs.readFile(SESSIONS_FILE, 'utf8');
+        const sessions = JSON.parse(data);
+        if (!Array.isArray(sessions)) {
+            throw new Error('sessions.json must contain an array');
+        }
+        return sessions;
+    } catch (err) {
+        if (err.code === 'ENOENT') return [];
+        throw err;
+    }
 }
 
-function isValidDate(str) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(str)) return false;
-  const d = new Date(str);
-  return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === str;
-}
-
-// ---------- READ: view / filter workload tasks ----------
-// GET /view-tasks?module=&effort=&status=&dueBefore=&sortBy=&order=
-async function viewTasks(req, res) {
-  try {
-    const { module: moduleName, effort, status, dueBefore, sortBy, order } = req.query;
-
-    // Error case 1: invalid filter or sort value -> 400
+// Returns a list of error messages (empty list = filters are valid)
+function validateFilters({ subject, date, minDuration, sortBy, order }) {
     const errors = [];
-    if (effort && !VALID_EFFORTS.includes(effort)) {
-      errors.push(`effort must be one of: ${VALID_EFFORTS.join(', ')}`);
-    }
-    if (status && !VALID_STATUSES.includes(status)) {
-      errors.push(`status must be one of: ${VALID_STATUSES.join(', ')}`);
-    }
-    if (dueBefore && !isValidDate(dueBefore)) {
-      errors.push('dueBefore must be a valid date in YYYY-MM-DD format');
-    }
-    if (sortBy && !VALID_SORT_FIELDS.includes(sortBy)) {
-      errors.push(`sortBy must be one of: ${VALID_SORT_FIELDS.join(', ')}`);
-    }
-    if (order && !VALID_ORDERS.includes(order)) {
-      errors.push(`order must be one of: ${VALID_ORDERS.join(', ')}`);
-    }
-    if (errors.length > 0) {
-      return res.status(400).json({ message: 'Invalid filter criteria', errors });
-    }
+    const params = { subject, date, minDuration, sortBy, order };
 
-    let tasks = await readJSON(TASKS_FILE);
-
-    if (moduleName) {
-      tasks = tasks.filter((t) => t.module.toLowerCase() === moduleName.trim().toLowerCase());
-    }
-    if (effort) tasks = tasks.filter((t) => t.effort === effort);
-    if (status) tasks = tasks.filter((t) => t.status === status);
-    if (dueBefore) tasks = tasks.filter((t) => t.deadline <= dueBefore);
-
-    // Error case 2: nothing matches -> 404
-    if (tasks.length === 0) {
-      return res.status(404).json({ message: 'No tasks match the selected filters' });
-    }
-
-    const field = sortBy || 'deadline';
-    const direction = order === 'desc' ? -1 : 1;
-    tasks.sort((a, b) => {
-      let x = a[field];
-      let y = b[field];
-      if (field === 'effort') {
-        x = EFFORT_RANK[x];
-        y = EFFORT_RANK[y];
-      }
-      if (x < y) return -1 * direction;
-      if (x > y) return 1 * direction;
-      return 0;
+    Object.keys(params).forEach(function (name) {
+        if (params[name] !== undefined && typeof params[name] !== 'string') {
+            errors.push(name + ' must be a single value.');
+        }
     });
+    if (errors.length > 0) return errors;
 
-    // Success case
-    return res.status(200).json(tasks);
-  } catch (error) {
-    return res.status(500).json({ message: 'Unable to read tasks from the data store' });
-  }
+    if (subject !== undefined && subject.trim().length > MAX_SUBJECT_LENGTH) {
+        errors.push('subject must be at most ' + MAX_SUBJECT_LENGTH + ' characters.');
+    }
+    if (date !== undefined && date !== '' && !isValidDate(date)) {
+        errors.push('date must be a valid date in YYYY-MM-DD format.');
+    }
+    if (minDuration !== undefined && minDuration !== '' && !/^[1-9]\d*$/.test(minDuration)) {
+        errors.push('minDuration must be a positive whole number of minutes.');
+    }
+    if (sortBy !== undefined && sortBy !== '' && !VALID_SORT_FIELDS.includes(sortBy)) {
+        errors.push('sortBy must be one of: ' + VALID_SORT_FIELDS.join(', ') + '.');
+    }
+    if (order !== undefined && order !== '' && !VALID_ORDERS.includes(order)) {
+        errors.push('order must be one of: ' + VALID_ORDERS.join(', ') + '.');
+    }
+    return errors;
 }
 
-module.exports = { readJSON, writeJSON, viewTasks, TASKS_FILE };
+// GET /view-sessions?subject=&date=&minDuration=&sortBy=&order=
+async function viewSessions(req, res) {
+    try {
+        const { subject, date, minDuration, sortBy, order } = req.query;
+
+        // 1. Validate the filters (Error Case 1: invalid filter values)
+        const errors = validateFilters({ subject, date, minDuration, sortBy, order });
+        if (errors.length > 0) {
+            return res.status(400).json({ message: errors.join(' '), errors: errors });
+        }
+
+        // 2. Read the sessions from the JSON data store
+        let sessions = await readSessions();
+
+        // 3. Apply the filters
+        const subjectFilter = subject ? subject.trim().toLowerCase() : '';
+        const filtersUsed = Boolean(subjectFilter || date || minDuration);
+
+        if (subjectFilter) {
+            sessions = sessions.filter(function (s) {
+                return s.subject.toLowerCase().includes(subjectFilter);
+            });
+        }
+        if (date) {
+            sessions = sessions.filter(function (s) {
+                return s.date === date;
+            });
+        }
+        if (minDuration) {
+            sessions = sessions.filter(function (s) {
+                return s.durationMinutes >= Number(minDuration);
+            });
+        }
+
+        // 4. Nothing to show (Error Case 2)
+        if (sessions.length === 0) {
+            return res.status(404).json({
+                message: filtersUsed
+                    ? 'No focus sessions match the selected filters.'
+                    : 'No focus sessions have been logged yet.'
+            });
+        }
+
+        // 5. Sort (default: oldest first by date, then start time)
+        const field = sortBy || 'date';
+        const direction = order === 'desc' ? -1 : 1;
+        sessions.sort(function (a, b) {
+            let result;
+            if (typeof a[field] === 'string') {
+                result = a[field].localeCompare(b[field]);
+            } else {
+                result = a[field] - b[field];
+            }
+            if (result === 0) {
+                result = a.date.localeCompare(b.date) || a.startTime.localeCompare(b.startTime);
+            }
+            return result * direction;
+        });
+
+        // 6. Success Case
+        const totalMinutes = sessions.reduce(function (sum, s) {
+            return sum + s.durationMinutes;
+        }, 0);
+
+        return res.status(200).json({
+            count: sessions.length,
+            totalMinutes: totalMinutes,
+            sessions: sessions
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ message: 'Unable to read focus sessions.' });
+    }
+}
+
+module.exports = { viewSessions, validateFilters, readSessions };
