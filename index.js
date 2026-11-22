@@ -1,5 +1,7 @@
 var express = require('express');
 var bodyParser = require('body-parser');
+const { logSession } = require('./utils/JaredAwUtil');
+const { deleteSession } = require('./utils/AhmadDeleteUtils.js');
 var { updateFocusSession } = require('./utils/VineetUtil');
 var app = express();
 
@@ -12,6 +14,12 @@ app.use(express.static('./public'));
 // ---------------------------------------------------------------
 // Routes (each team member registers their own route(s) below)
 // ---------------------------------------------------------------
+
+// Member 1 (Jared Aw): Log Focus Session
+app.post('/log-session', logSession);
+
+// Member 2 (Ahmad): Delete Workload Task
+app.delete('/delete-session/:id', deleteSession);
 
 // Member 3 (Vineet): Update Focus Session
 app.put('/update-session/:id', async function (req, res) {
