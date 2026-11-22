@@ -12,17 +12,17 @@ app.use(express.static('./public'));
 // Routes (each team member registers their own route(s) below)
 // ---------------------------------------------------------------
 
-// Read tasks (Ahmad)
-const { viewTasks } = require('./utils/AhmadUtil.js');
-app.get('/view-tasks', viewTasks);
-
-// Read: View / Filter Workload Tasks (Ahmad)
-const { viewTasks } = require('./utils/AhmadUtil');
-app.get('/view-tasks', viewTasks);
-
 // View Focus Sessions
 const { viewSessions } = require('./utils/AhmadUtil.js');
 app.get('/view-sessions', viewSessions);
+
+// Log Focus Session
+const { logSession } = require('./utils/JaredAwUtil');
+app.post('/log-session', logSession);
+
+// Delete a workload task (Ahmad)
+const { deleteSession } = require('./utils/AhmadDeleteUtils.js');
+app.delete('/delete-session/:id', deleteSession);
 
 var server = app.listen(PORT, function () {
     const address = server.address();

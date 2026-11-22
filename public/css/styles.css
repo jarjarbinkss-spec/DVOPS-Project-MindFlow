@@ -1,0 +1,121 @@
+/* MindFlow - shared styles */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: #f4f6fb;
+    color: #1f2937;
+}
+
+.site-header {
+    background: #3730a3;
+    color: #fff;
+    padding: 24px 16px;
+    text-align: center;
+}
+
+.site-header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.site-header p {
+    margin: 4px 0 0;
+    opacity: 0.85;
+}
+
+.container {
+    max-width: 720px;
+    margin: 24px auto;
+    padding: 0 16px;
+}
+
+.card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+/* ---------------------------------------------------------------
+   Member 1 (Jared Aw): Log Focus Session
+   --------------------------------------------------------------- */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-row {
+    display: flex;
+    gap: 16px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: 2px solid #6366f1;
+    border-color: #6366f1;
+}
+
+.duration {
+    margin: 0 0 16px;
+    color: #475569;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: #4f46e5;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background: #4338ca;
+}
+
+.message {
+    margin-top: 16px;
+    border-radius: 6px;
+}
+
+.message.success,
+.message.error {
+    padding: 12px 14px;
+}
+
+.message.success {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.message.error {
+    background: #fee2e2;
+    color: #991b1b;
+}
