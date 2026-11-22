@@ -1,4 +1,3 @@
-// public/js/view-sessions.js
 // READ feature (frontend): view and filter logged focus sessions
 
 function showViewMessage(text, type) {

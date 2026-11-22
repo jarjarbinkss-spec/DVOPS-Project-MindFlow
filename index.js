@@ -20,6 +20,10 @@ app.get('/view-tasks', viewTasks);
 const { viewTasks } = require('./utils/AhmadUtil');
 app.get('/view-tasks', viewTasks);
 
+// View Focus Sessions
+const { viewSessions } = require('./utils/AhmadUtil.js');
+app.get('/view-sessions', viewSessions);
+
 var server = app.listen(PORT, function () {
     const address = server.address();
     const baseUrl = `http://${address.address == '::' ? 'localhost' : address.address}:${address.port}`;
