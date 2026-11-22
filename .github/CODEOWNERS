@@ -1,16 +1,16 @@
-# Shared integration files
+// Shared integration files
 /index.js @jarjarbinks-spec @AhmadW-2505 @vindaloo2
 /public/index.html @jarjarbinks-spec @AhmadW-2505 @vindaloo2
 /public/css/styles.css @jarjarbinks-spec @AhmadW-2505 @vindaloo2
 
-# Member 1 (Jared ): Log Focus Session
+// Member 1 (Jared ): Log Focus Session
 /utils/JaredUtil.js @jarjarbinks-spec
 /public/js/jared.js @jarjarbinks-spec
 
-# Member 2 (Ahmad): Read and Delete Focus Session
+// Member 2 (Ahmad): Read and Delete Focus Session
 /utils/AhmadUtil.js @AhmadW-2505
 /public/js/ahmad.js @AhmadW-2505
 
-# Member 3 (Vineet): Update Focus Session
+// Member 3 (Vineet): Update Focus Session
 /utils/VineetUtil.js @vindaloo2
 /public/js/vineet.js @vindaloo2
