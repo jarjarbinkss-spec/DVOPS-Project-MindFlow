@@ -1,5 +1,3 @@
-// Member 1 (Jared Aw): Log Focus Session - frontend logic
-
 // Convert "HH:MM" to minutes since midnight
 function timeToMinutes(time) {
     var parts = time.split(':');

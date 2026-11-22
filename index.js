@@ -8,10 +8,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('./public'));
 
-// ---------------------------------------------------------------
-// Routes (each team member registers their own route(s) below)
-// ---------------------------------------------------------------
-
 // Log Focus Session
 const { logSession } = require('./utils/JaredAwUtil');
 app.post('/log-session', logSession);
