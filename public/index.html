@@ -46,30 +46,43 @@
         <!-- Member 2: Create Workload Task -->
 
         <!-- Member 3 (Vineet): Update Focus Session -->
-        <section id="update-session-section">
+        <section class="card" id="update-session-section">
             <h2>Update Focus Session</h2>
             <form id="update-session-form" novalidate>
-                <label for="update-session-id">Session ID</label>
-                <input type="text" id="update-session-id" placeholder="e.g. 101" required>
+                <div class="form-group">
+                    <label for="update-session-id">Session ID</label>
+                    <input type="text" id="update-session-id" placeholder="e.g. 101" required>
+                </div>
 
-                <label for="update-subject">Subject</label>
-                <input type="text" id="update-subject" placeholder="e.g. Math revision" required>
+                <div class="form-group">
+                    <label for="update-subject">Subject</label>
+                    <input type="text" id="update-subject" placeholder="e.g. Math revision" required>
+                </div>
 
-                <label for="update-date">Date</label>
-                <input type="date" id="update-date" required>
+                <div class="form-group">
+                    <label for="update-date">Date</label>
+                    <input type="date" id="update-date" required>
+                </div>
 
-                <label for="update-start-time">Start time</label>
-                <input type="time" id="update-start-time" required>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="update-start-time">Start time</label>
+                        <input type="time" id="update-start-time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-end-time">End time</label>
+                        <input type="time" id="update-end-time" required>
+                    </div>
+                </div>
 
-                <label for="update-end-time">End time</label>
-                <input type="time" id="update-end-time" required>
+                <div class="form-group">
+                    <label for="update-notes">Notes (optional)</label>
+                    <textarea id="update-notes" rows="3" placeholder="e.g. Chapter 4 practice questions"></textarea>
+                </div>
 
-                <label for="update-notes">Notes (optional)</label>
-                <textarea id="update-notes" rows="3" placeholder="e.g. Chapter 4 practice questions"></textarea>
-
-                <button type="submit">Update Session</button>
+                <button type="submit" class="btn-primary">Update Session</button>
             </form>
-            <p id="update-message" class="message" role="alert"></p>
+            <div id="update-message" class="message" role="alert"></div>
         </section>
     </main>
 
