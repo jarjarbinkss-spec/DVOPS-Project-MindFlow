@@ -13,8 +13,8 @@ app.use(express.static('./public'));
 // ---------------------------------------------------------------
 
 // Delete a workload task (Ahmad)
-const { viewTasks, deleteTask } = require('./utils/AhmadDeleteUtils.js');
-app.delete('/delete-task/:id', deleteTask);
+const { deleteSession } = require('./utils/AhmadDeleteUtils.js');
+app.delete('/delete-session/:id', deleteSession);
 
 var server = app.listen(PORT, function () {
     const address = server.address();
