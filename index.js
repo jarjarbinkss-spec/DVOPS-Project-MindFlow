@@ -12,6 +12,10 @@ app.use(express.static('./public'));
 const { logSession } = require('./utils/JaredAwUtil');
 app.post('/log-session', logSession);
 
+// Delete a workload task (Ahmad)
+const { deleteSession } = require('./utils/AhmadDeleteUtils.js');
+app.delete('/delete-session/:id', deleteSession);
+
 var server = app.listen(PORT, function () {
     const address = server.address();
     const baseUrl = `http://${address.address == '::' ? 'localhost' : address.address}:${address.port}`;
